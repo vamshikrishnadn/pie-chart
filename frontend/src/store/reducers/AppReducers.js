@@ -5,6 +5,11 @@ export default (state = {}, action) => {
         ...state,
         pieChartData: [...action.payload],
       };
+    case 'BTN_LOADER':
+      return {
+        ...state,
+        btnLoader: action.payload,
+      };
 
     default:
       return state;

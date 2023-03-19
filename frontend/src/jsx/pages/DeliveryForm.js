@@ -1,15 +1,22 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Spinner from 'react-bootstrap/Spinner';
+import { addNewOrder } from '../../store/actions/AppActions';
 
 const DeliveryForm = () => {
+  const dispatch = useDispatch();
+
   // states
   const [status, setStatus] = useState();
-  const [loading, setLoading] = useState(false);
 
   // constants
   const availableStatus = ['Pending', 'Conformed', 'Dispatched', 'Complete', 'Canceled'];
+
+  // selectors
+  const btnLoading = useSelector(state => state.app?.btnLoader);
 
   const handleChange = e => {
     setStatus(e.target?.value);
@@ -17,7 +24,7 @@ const DeliveryForm = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    alert('called');
+    dispatch(addNewOrder({ status }));
   };
 
   return (
@@ -48,7 +55,7 @@ const DeliveryForm = () => {
               type='submit'
               style={{ width: '100px' }}
             >
-              {loading ? (
+              {btnLoading ? (
                 <Spinner animation='border' role='status' size='sm'>
                   <span className='visually-hidden'>Loading...</span>
                 </Spinner>
